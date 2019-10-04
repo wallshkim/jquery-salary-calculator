@@ -28,11 +28,11 @@ function handleSubmitButton () {
         employeeInfo.employeeTitle = employeeTitle
         employeeInfo.annualSalary = annualSalary
         // check object
-        console.log(employeeInfo);
+        console.log('employeeInfo object', employeeInfo);
         // push object into employees array
         employees.push(employeeInfo);
         // check array
-        console.log(employees);
+        console.log('employees array', employees);
         // append to DOM
         $('tbody').append(`
             <tr>
@@ -59,22 +59,24 @@ function handleSubmitButton () {
 }// end handleSubmitButton
 
 function calculateMonthlyCosts () {
-    console.log(employees);
+    console.log('employees array', employees);
     // loop through employees array for each salary
     for(employee of employees){
         let employeeMonthlySalary = (employee.annualSalary)/12;
         totalMonthlyCosts += employeeMonthlySalary;
-        console.log(totalMonthlyCosts);
-        console.log("employeeMonthlySalary", (employee.annualSalary) / 12);
-        // $('#totalMonthlyOutput').text(totalMonthlyCosts);
+        console.log('totalMonthlyCost is:', totalMonthlyCosts);
+        console.log('employeeMonthlySalary', (employee.annualSalary) / 12);
     }// end for
-    // replace output on DOM with new number
-    $('#totalMonthlyOutput').text(totalMonthlyCosts);
+    // replace output on DOM with new number in currency format -- found this Intl.NumberFormat on MDN web docs
+    $('#totalMonthlyOutput').text(Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(totalMonthlyCosts));
+    //If the total monthly cost exceeds $20,000
+    //add a red background color to the total monthly cost.
     if(totalMonthlyCosts > 20000){
         $('#totalMonthlyOutput').css('background-color', 'red');
+    }// end if
+    else{
+        $('#totalMonthlyOutput').css('background-color', 'transparent');
     }
     //reset cost
     totalMonthlyCosts = 0;
 }// end calculateMonthlyCosts
-
-//If the total monthly cost exceeds $20,000, add a red background color to the total monthly cost.
