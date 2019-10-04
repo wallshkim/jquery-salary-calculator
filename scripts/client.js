@@ -1,8 +1,9 @@
 $(document).ready(readyNow);
 
 let employees = [];
+let totalMonthlyCosts = 0;
 
-function readyNow(){
+function readyNow () {
     console.log('in readyNow');
     $('#submitButton').on('click', handleSubmitButton);
 }
@@ -40,17 +41,35 @@ function handleSubmitButton () {
                 <td>${employeeID}</td>
                 <td>${employeeTitle}</td>
                 <td>${annualSalary}</td>
-                <button class="deleteButton">Delete</button>
+                <td><button class="deleteButton">Delete</button></td>
             </tr>
         `)
+        // call function
+        calculateMonthlyCosts();
+        // clear inputs
+        $('#firstName').val('');
+        $('#lastName').val('');
+        $('#employeeID').val('');
+        $('#employeeTitle').val('');
+        $('#annualSalary').val('');
     }// end if all fields are entered
     else{
         alert('Please complete all fields');
     }// end else fields are blank
-    // clear inputs
-    $('#firstName').val('');
-    $('#lastName').val('');
-    $('#employeeID').val('');
-    $('#employeeTitle').val('');
-    $('#annualSalary').val('');
 }// end handleSubmitButton
+
+function calculateMonthlyCosts () {
+    console.log(employees);
+    // loop through employees array for each salary
+    for(employee of employees){
+        let employeeMonthlySalary = (employee.annualSalary)/12;
+        totalMonthlyCosts += employeeMonthlySalary;
+        console.log(totalMonthlyCosts);
+        console.log("employeeMonthlySalary", (employee.annualSalary) / 12);
+        // $('#totalMonthlyOutput').text(totalMonthlyCosts);
+    }// end for
+    // replace output on DOM with new number
+    $('#totalMonthlyOutput').text(totalMonthlyCosts);
+    //reset cost
+    totalMonthlyCosts = 0;
+}// end calculateMonthlyCosts
