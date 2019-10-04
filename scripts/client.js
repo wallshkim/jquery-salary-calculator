@@ -5,7 +5,10 @@ let totalMonthlyCosts = 0;
 
 function readyNow () {
     console.log('in readyNow');
+    // Create event listener for handleSubmitButton
     $('#submitButton').on('click', handleSubmitButton);
+    // Create event listener for deleteButton
+    $('tbody').on('click', '.deleteButton', handleDelete)
 }
 
 function handleSubmitButton () {
@@ -35,7 +38,7 @@ function handleSubmitButton () {
         console.log('employees array', employees);
         // append to DOM
         $('tbody').append(`
-            <tr>
+            <tr id="newEmployeeOutput">
                 <td>${firstName}</td>
                 <td>${lastName}</td>
                 <td>${employeeID}</td>
@@ -76,7 +79,16 @@ function calculateMonthlyCosts () {
     }// end if
     else{
         $('#totalMonthlyOutput').css('background-color', 'transparent');
-    }
+    }// end else
     //reset cost
     totalMonthlyCosts = 0;
 }// end calculateMonthlyCosts
+
+//Create a delete button that removes an employee from the DOM.
+//Once the employee is deleted, update the total spend on salaries account for this employee's removal.
+//You will need to use .text() as a getter or look into jQuery's .data() function. This is tricky!
+
+function handleDelete(){
+    console.log('Delete Button was clicked!');
+    
+}
