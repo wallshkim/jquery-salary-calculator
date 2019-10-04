@@ -90,5 +90,6 @@ function calculateMonthlyCosts () {
 
 function handleDelete(){
     console.log('Delete Button was clicked!');
-    
+    // removes entire table row when delete button is clicked
+    $(this).closest('tr').remove();
 }
