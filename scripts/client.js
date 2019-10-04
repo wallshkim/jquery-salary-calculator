@@ -70,6 +70,11 @@ function calculateMonthlyCosts () {
     }// end for
     // replace output on DOM with new number
     $('#totalMonthlyOutput').text(totalMonthlyCosts);
+    if(totalMonthlyCosts > 20000){
+        $('#totalMonthlyOutput').css('background-color', 'red');
+    }
     //reset cost
     totalMonthlyCosts = 0;
 }// end calculateMonthlyCosts
+
+//If the total monthly cost exceeds $20,000, add a red background color to the total monthly cost.
