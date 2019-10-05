@@ -1,95 +1,103 @@
 $(document).ready(readyNow);
 
-let employees = [];
+let totalAnnualCosts = 0;
 let totalMonthlyCosts = 0;
 
-function readyNow () {
+function readyNow() {
+    // jQuery sourced correctly?
     console.log('in readyNow');
     // Create event listener for handleSubmitButton
     $('#submitButton').on('click', handleSubmitButton);
     // Create event listener for deleteButton
-    $('tbody').on('click', '.deleteButton', handleDelete)
+    $('#employeeTable').on('click', '.deleteButton', handleDeleteButton)
 }
 
-function handleSubmitButton () {
+function handleSubmitButton() {
+    // check handleSubmit being called correctly
     console.log('I was clicked!');
-    // create empty object to store info
-    let employeeInfo = {};
-    // collect input values
+    // get input values and store in variables
     let firstName = $('#firstName').val();
     let lastName = $('#lastName').val();
     let employeeID = $('#employeeID').val();
     let employeeTitle = $('#employeeTitle').val();
-    let annualSalary = $('#annualSalary').val();
-    // Only store if all input fields are entered
-    if(firstName && lastName && employeeID && employeeTitle && annualSalary){
-        console.log('yay all fields entered');
-        // store in employee object
-        employeeInfo.firstName = firstName
-        employeeInfo.lastName = lastName
-        employeeInfo.employeeID = employeeID
-        employeeInfo.employeeTitle = employeeTitle
-        employeeInfo.annualSalary = annualSalary
-        // check object
-        console.log('employeeInfo object', employeeInfo);
-        // push object into employees array
-        employees.push(employeeInfo);
-        // check array
-        console.log('employees array', employees);
-        // append to DOM
+    let annualSalary = Number($('#annualSalary').val());
+    // Require all inputs to be filled in
+    if (firstName && lastName && employeeID && employeeTitle && annualSalary) {
+        // Append all inputs to table body on DOM
         $('tbody').append(`
             <tr id="newEmployeeOutput">
                 <td>${firstName}</td>
                 <td>${lastName}</td>
                 <td>${employeeID}</td>
                 <td>${employeeTitle}</td>
-                <td>${annualSalary}</td>
+                <td class"annualSalaryOutput">${annualSalary}</td>
                 <td><button class="deleteButton">Delete</button></td>
             </tr>
         `)
-        // call function
-        calculateMonthlyCosts();
-        // clear inputs
+        // Add employee's annual salary to the totalAnnualCosts
+        totalAnnualCosts += annualSalary;
+        // make sure math is working
+        console.log('Total Annual Costs: ', totalAnnualCosts);
+        // Divide to get totalMonthlyCosts
+        totalMonthlyCosts = totalAnnualCosts / 12;
+        // make sure math is working
+        console.log('Total Monthly Costs: ', totalMonthlyCosts);
+        // put through displayMonthlyCostsUSD to get it on DOM in currency format
+        displayTotalMonthlyCostsUSD();
+        // clear all inputs
         $('#firstName').val('');
         $('#lastName').val('');
         $('#employeeID').val('');
         $('#employeeTitle').val('');
         $('#annualSalary').val('');
     }// end if all fields are entered
-    else{
+    else {
         alert('Please complete all fields');
     }// end else fields are blank
 }// end handleSubmitButton
 
-function calculateMonthlyCosts () {
-    console.log('employees array', employees);
-    // loop through employees array for each salary
-    for(employee of employees){
-        let employeeMonthlySalary = (employee.annualSalary)/12;
-        totalMonthlyCosts += employeeMonthlySalary;
-        console.log('totalMonthlyCost is:', totalMonthlyCosts);
-        console.log('employeeMonthlySalary', (employee.annualSalary) / 12);
-    }// end for
-    // replace output on DOM with new number in currency format -- found this Intl.NumberFormat on MDN web docs
-    $('#totalMonthlyOutput').text(Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(totalMonthlyCosts));
-    //If the total monthly cost exceeds $20,000
-    //add a red background color to the total monthly cost.
-    if(totalMonthlyCosts > 20000){
+function displayTotalMonthlyCostsUSD() {
+    // check function being called correctly
+    console.log('in displayMonthlyCostsUSD');
+    // change totalMonthlyCosts number into USD currency format -- found this Intl.NumberFormat on MDN web docs
+    /* Parameters: 
+        (1) locales argument: telling it to use American english 
+        (2) style should be currency 
+        (3) currency used should be USD*/
+    let totalMonthlyCostsUSD = new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(totalMonthlyCosts);
+    // make sure currency formatting is working
+    console.log('Currency formatted: ', totalMonthlyCostsUSD);
+    // display totalMonthlyCostsUSD on DOM
+    $('#totalMonthlyOutput').text(totalMonthlyCostsUSD);
+    // If the total monthly cost exceeds $20,000 add a red background
+    if (totalMonthlyCosts > 20000) {
+        console.log('Oh no! Went over 20000 in monthly costs!');
         $('#totalMonthlyOutput').css('background-color', 'red');
-    }// end if
-    else{
+    }// end if exceeds 20000 then make red
+    // If below or changes back to below then make transparent
+    else {
+        console.log('Yay! We are under 20000 in monthly costs');
         $('#totalMonthlyOutput').css('background-color', 'transparent');
-    }// end else
-    //reset cost
-    totalMonthlyCosts = 0;
-}// end calculateMonthlyCosts
+    }// end else change to transparent
+}// end displayTotalMonthlyCostsUSD
 
-//Create a delete button that removes an employee from the DOM.
-//Once the employee is deleted, update the total spend on salaries account for this employee's removal.
-//You will need to use .text() as a getter or look into jQuery's .data() function. This is tricky!
-
-function handleDelete(){
-    console.log('Delete Button was clicked!');
-    // removes entire table row when delete button is clicked
+function handleDeleteButton() {
+    // make sure function being called properly
+    console.log('delete button was clicked!');
+    // remove deleted employee row from table
     $(this).closest('tr').remove();
-}
+    // get annualSalary of deleted employee (parent is td and closest previous td has annual salary)
+    let deletedAnnualSalary = Number($(this).parent().prev().text());
+    // make sure it's getting the correct text
+    console.log('Deleted Annual Salary: ', deletedAnnualSalary);
+    // subtract deleted salary from totalAnnualCosts
+    totalAnnualCosts -= deletedAnnualSalary;
+    // Make sure math is working
+    console.log('Total Annual Costs minus deleted annual salary: ', totalAnnualCosts);
+    // convert to totalMonthly Costs
+    totalMonthlyCosts = totalAnnualCosts/12;
+    // make sure math is working
+    console.log('totalMonthlyCosts after employee deletion:', totalMonthlyCosts);
+    // display new totalMonthlyCosts on DOM
+    displayTotalMonthlyCostsUSD();
+}// end handleDeleteButton
