@@ -1,53 +1,76 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <script src="scripts/jquery-3.4.1.min.js"></script>
-    <!-- <script src="scripts/withemployeearray.js"></script> -->
     <script src="scripts/client.js"></script>
+    <link href="https://fonts.googleapis.com/css?family=Martel&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Karla|Martel&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles/bootstrap.css">
     <link rel="stylesheet" href="styles/style.css">
     <title>Salary Calculator</title>
 </head>
+
 <body>
-    <h1>Salary Calculator</h1>
+    <header>
+        <h1 class="jumbotron">Salary Calculator</h1>
+    </header>
 
-    <h2>Add Employee</h2>
-
+    <h2 id="addEmployeeHeading">Add Employee</h2>
     <div class="inputsContainer">
-        <input type="text" name="firstName" id="firstName" placeholder="First Name">
-        <input type="text" name="lastName" id="lastName" placeholder="Last Name">
-        <input type="number" name="employeeID" id="employeeID" placeholder="ID">
-        <input type="text" name="title" id="employeeTitle" placeholder="Title">
-        <input type="number" name="" id="annualSalary" placeholder="Annual Salary">
+        <div class="input-group mb-3">
+            <input class="inputBox form-control" type="text" name="firstName" id="firstName" placeholder="First Name">
+        </div>
+        <div class="input-group mb-3">
+            <input class="inputBox form-control" type="text" name="lastName" id="lastName" placeholder="Last Name">
+        </div>
+        <div class="input-group mb-3">
+            <input class="inputBox form-control" type="number" name="employeeID" id="employeeID" placeholder="ID">
+        </div>
+        <div class="input-group mb-3">
+            <input class="inputBox form-control" type="text" name="title" id="employeeTitle" placeholder="Title">
+        </div>
+        <div class="input-group mb-3">
+            <div class="input-group-prepend">
+                <span class="input-group-text">$</span>
+            </div>
+            <input class="inputBox form-control" type="number" name="annualSalary" id="annualSalary"
+                placeholder="Annual Salary">
+        </div>
     </div>
 
-    <button type="button" id="submitButton">Submit</button>
+    <div class="submitButtonContainer">
+        <button type="button" class="btn btn-success" id="submitButton">Submit</button>
+    </div>
 
-    <h2>Employees</h2>
+    <div>
+        <h2 id="employeesTitle">Employees</h2>
+        <table class="table table-bordered table-light table-striped table-hover shadow p-3 mb-5 bg-white rounded">
+            <thead class="thead-dark">
+                <tr>
+                    <th>First Name</th>
+                    <th>Last Name</th>
+                    <th>ID</th>
+                    <th>Title</th>
+                    <th>Annual Salary</th>
+                    <th id="deleteButtonsColumn"></th>
+                </tr>
+            </thead>
+            <tbody id="employeeTable">
+                <!-- dynamically added with jQuery -->
+            </tbody>
+            <tfoot>
+                <tr colspan="6" class="tableFooterRow"></tr>
+            </tfoot>
+        </table>
+    </div>
 
-    <table class="table">
-        <thead>
-            <tr>
-                <th>First Name</th>
-                <th>Last Name</th>
-                <th>ID</th>
-                <th>Title</th>
-                <th>Annual Salary</th>
-                <th id="deleteButtons"></th>
-            </tr>
-        </thead>
-        <tbody id="employeeTable">
-            <!-- dynamically added with jQuery -->
-        </tbody>
-        <tfoot>
-            <tr></tr>
-        </tfoot>
-    </table>
-
-    <h2>Total Monthly: <span id="totalMonthlyOutput"></span></h2>
-
+    <footer id="totalContainer">
+        <h2>Total Monthly: <span id="totalMonthlyOutput"></span></h2>
+    </footer>
 </body>
+
 </html>

@@ -1,0 +1,49 @@
+body {
+    width: 80%;
+    margin: auto;
+    font-family: 'Martel', serif;
+    font-family: 'Karla', sans-serif;
+}
+
+#addEmployeeHeading {
+    margin-bottom: 20px;
+}
+
+.inputsContainer {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin: 5px 0px;
+}
+
+.inputBox, .input-group-text {
+    border-color: green;
+    background-color: aliceblue;
+}
+
+#employeesTitle {
+    margin-bottom: 20px;
+}
+
+.submitButtonContainer, #totalContainer {
+    display: flex;
+    justify-content: flex-end;
+    margin: 5px 0px;
+}
+
+.jumbotron {
+    padding: 30px 0px;
+    text-align: left;
+    border-bottom-style: solid;
+    border-bottom-width: 2px;
+    border-bottom-color: green;
+    border-bottom-left-radius: 0px;
+    border-bottom-right-radius: 0px;
+    background-color: transparent;
+    color: indianred;
+    font-family: 'Martel', serif;
+}
+
+.tableFooterRow {
+    background-color: lightsteelblue;
+}

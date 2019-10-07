@@ -1,5 +1,6 @@
 $(document).ready(readyNow);
 
+// Create global vars
 let totalAnnualCosts = 0;
 let totalMonthlyCosts = 0;
 
@@ -30,8 +31,8 @@ function handleSubmitButton() {
                 <td>${lastName}</td>
                 <td>${employeeID}</td>
                 <td>${employeeTitle}</td>
-                <td class"annualSalaryOutput">${annualSalary}</td>
-                <td><button class="deleteButton">Delete</button></td>
+                <td class="annualSalaryOutput">${annualSalary}</td>
+                <td><button class="deleteButton btn btn-dark">Delete</button></td>
             </tr>
         `)
         // Add employee's annual salary to the totalAnnualCosts
@@ -72,7 +73,7 @@ function displayTotalMonthlyCostsUSD() {
     // If the total monthly cost exceeds $20,000 add a red background
     if (totalMonthlyCosts > 20000) {
         console.log('Oh no! Went over 20000 in monthly costs!');
-        $('#totalMonthlyOutput').css('background-color', 'red');
+        $('#totalMonthlyOutput').css('background-color', 'indianred');
     }// end if exceeds 20000 then make red
     // If below or changes back to below then make transparent
     else {
